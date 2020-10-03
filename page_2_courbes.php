@@ -15,20 +15,34 @@
     $chart1_chan = "c0,c0,c134,c3,c4,c5,c6,c1,c2,c53,c27,c56,c7,c138,c21,c23,c22,c24,c99,c92,c112,c12"; // la 2 eme valeur (decendrage) est calculé d'apres c0
     $chart2_name = ['allumage electrique'];
     
-    // requete pour initialiser la date
-	$query1 = "SELECT YEAR(dateB),MONTH(dateB),DAY(dateB) FROM consommation  
-             LIMIT 1";
-			 
-	connectMaBase($hostname, $database, $username, $password);
-    $req1 = mysql_query($query1) ;
-	mysql_close();
-
-    $data = mysql_fetch_row($req1);
-    $dateMin = [$data[0],$data[1],$data[2]];
+	/*Connexion BDD*/
+	$link=mysqli_connect($hostname, $username,$password,$database);
 	
-	if (empty($data[0])){
+	/* Verification de la connexion */
+    if (mysqli_connect_errno()) 
+    {
+        printf("echec de la connexion : %s\n", mysqli_connect_error());
+        exit();
+    }
+    // requete pour initialiser la date
+	$query1 = "SELECT YEAR(dateB),MONTH(dateB),DAY(dateB) FROM consommation LIMIT 1";    
+    if ($result = mysqli_query($link, $query1)) 
+    {
+        $data = mysqli_fetch_row($result);
+        $dateMin = [$data[0],$data[1],$data[2]];
+        
+        /* Recupere un tableau associatif */
+        while ($row = mysqli_fetch_row($result)) 
+        {
+            printf ("%s (%s)\n", $row[0], $row[1]);
+        }
+    }	
+	if (empty($data[0]))
+	{
 		$dateMin = ['2017','01','01']; 
 	}
+	/* Fermeture de la connexion */
+    mysqli_close($link);
 ?>
 
 <div class="rel">

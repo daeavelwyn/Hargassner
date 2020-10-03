@@ -6,7 +6,8 @@
 
 <?php
     $chart_last24_name = ['T° depart consigne','T° depart','T° chaudière','T° extérieur','T° ext moy','T° intérieur','Puissance'];
-    $chart_last24_chan = 'c23,c21,c3,c6,c7,c138,c134';
+    // $chart_last24_chan = 'c23,c21,c3,c6,c7,c138,c134';
+	$chart_last24_chan = 'c56,c57,c5,c15,c16,c58,c8'; // Valeurs pour la Classic 50 firmware 14.0l TODO : mettre ces correspondances dans une fonction dans le config.inc
 ?>
 
 
@@ -63,7 +64,7 @@ $(document).ready(function(){
 			zoomType: 'x',
 			backgroundColor: null,
 			events: {
-				load: requestData // in header.php
+				load: requestData // in header_debut.php
 			},
 		},
 	    credits: {
@@ -110,7 +111,7 @@ $(document).ready(function(){
 		},{ //axe 1
 			gridLineColor: '#CACACA', 
 			labels: {
-				format: '{value} %',
+				format: '{value} w',
                 x: 55,
 				style: {
 					color: 'red',
@@ -125,13 +126,16 @@ $(document).ready(function(){
             top: 10,
             height: 100,
             max: 100,
+			tooltip: {
+                valueSuffix: 'w',
+            },
         }],
 		tooltip: {
 	        shared: true,
 			crosshairs: true,
 			borderRadius: 6,
 			borderWidth: 1,
-			valueSuffix: ' °C',
+			//valueSuffix: ' °C',
 			xDateFormat: '%e %B %H:%M:%S',
 		 },
 		plotOptions: {

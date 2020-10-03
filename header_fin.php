@@ -3,7 +3,7 @@
 <body>
     <?php
     // **********recherche nouvelle version******************************
-    require_once("conf/version.php");
+   /* require_once("conf/version.php");
     $config_github = fopen('https://raw.githubusercontent.com/Jahislove/Hargassner/master/conf/version.php', 'r'); 
     if ($config_github) {
         while (!feof($config_github)) {
@@ -47,7 +47,7 @@
 		// avertir
 		
 		unlink('conf/new_param.txt');
-    }
+    }*/
 
 	
 	

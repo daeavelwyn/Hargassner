@@ -13,8 +13,8 @@
 </div>
 <?php
 // MySQL config
-$hostname = "192.168.0.222:3306"; //localhost si la BDD est sur la meme machine que le serveur web , sinon IP
-$database = "test"; // nom de la BDD
+$hostname = "192.168.0.250:3306"; //localhost si la BDD est sur la meme machine que le serveur web , sinon IP
+$database = "hargassner"; // nom de la BDD
 $username = "hargassner"; // utilisateur mysql
 $password = "password";
 
@@ -41,12 +41,18 @@ $color_bois = '#E97E04';
 $color_decend = '#AAFFAC';
 $color_legend = '#DBEDFF'; 
 
-function connectMaBase($hostname, $database, $username, $password){
-    $Conn = mysql_connect ($hostname, $username, $password) or trigger_error(mysql_error(),E_USER_ERROR);  
-    mysql_select_db($database, $Conn);
+function connectMaBase($hostname, $database, $username, $password)
+{
+	$link = mysqli_connect($hostname, $username,$password,$database);
+		if (!$link) 
+		{
+			echo "Erreur : Impossible de se connecter à MySQL." . PHP_EOL;
+			echo "Errno de débogage : " . mysqli_connect_errno() . PHP_EOL;
+			echo "Erreur de débogage : " . mysqli_connect_error() . PHP_EOL;
+			exit;
+		}
+	mysqli_close($link);
 }
-
-
 //  test des valeur les plus interessantes
     $chart1_name = ['0','1','2','3','4','5','6','8','10','11','12','13','14','16','20','21','22','23','24','50','51','63','76','77','78','79']; 
     $chart1_chan = "c0,c1,c2,c3,c4,c5,c6,c8,c10,c11,c12,c13,c14,c16,c20,c21,c22,c23,c24,c50,c51,c63,c76,c77,c78,c79"; 
@@ -62,13 +68,13 @@ function connectMaBase($hostname, $database, $username, $password){
             // WHERE dateB BETWEEN '2017-10-17 00:00:00' AND '2017-10-17  23:59:59'
             // ORDER BY dateB DESC ";
               
-	connectMaBase($hostname, $database, $username, $password);
-    $req = mysql_query($query) ;
-	mysql_close();
+	$link=mysqli_connect($hostname, $username, $password, $database);
+	$req = mysqli_query($link,$query) ;
+	mysqli_close($link);
     
 // pas toucher ci dessous
 
-    while($data = mysql_fetch_row($req)){
+    while($data = mysqli_fetch_row($req)){
         $dateD = strtotime($data[0]) * 1000;
         $liste0 .= "[". $dateD . "," . $data[1] ."],";
         $liste1 .= "[". $dateD . "," . $data[2] ."],";

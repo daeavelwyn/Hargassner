@@ -16,11 +16,18 @@ require_once("conf/config.inc.php");
                 ) as tmp
                 GROUP BY DATE(dateB)";
 
-    connectMaBase($hostname, $database, $username, $password);
-    $req1 = mysql_query($query1) ;
-	mysql_close();
+  $link=mysqli_connect($hostname, $username,$password,$database);
+	
+	/* Verification de la connexion */
+    if (mysqli_connect_errno()) 
+    {
+        printf("echec de la connexion : %s\n", mysqli_connect_error());
+        exit();
+    }
+    $req1 = mysqli_query($link,$query1) ;
+	mysqli_close($link);
     
-    while($data = mysql_fetch_row($req1)){
+    while($data = mysqli_fetch_row($req1)){
         $dateD = strtotime($data[0]) * 1000;
         // $dateD = (strtotime($data[0])+ 10000) * 1000;
         $liste1[] = [$dateD, $data[1]];
