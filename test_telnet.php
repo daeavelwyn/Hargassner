@@ -15,7 +15,8 @@ require_once("conf/config.inc.php");
     else {
         $reponse=fgets ($fp,1024); //lecture reponse telnet
         fclose($fp);
-	echo "La requte contient: ". $reponse."\n";
-	echo "Il y a ".count(explode(" ",$reponse))." entrees dans cette requete\n";
-    }
+	echo "\nLa requte contient: ". $reponse."\n";
+	echo "\nIl y a ".count(explode(" ",$reponse))." entrees dans cette requete\n";
+    
+	}
 ?>

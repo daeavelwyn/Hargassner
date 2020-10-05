@@ -44,7 +44,7 @@ if ($mode_conn == 'serial'){
 
 // a partir du firmware 14.0i , l'ordre des parametres a changé
 // on remet les valeurs dans l'ordre attendu par le site
-if ($firmware == '14i' || $firmware == '14j' || $firmware == '14k' || $firmware == '14l'){
+if ($firmware == '14i' || $firmware == '14j' || $firmware == '14k'  || $firmware == '14l'){
 	$T = $data; // reprends le tableau data
 	array_shift($T); // supprime la date pour aligner les chanels
 
